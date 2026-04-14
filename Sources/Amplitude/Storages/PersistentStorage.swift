@@ -298,14 +298,10 @@ extension PersistentStorage {
     }
 
     internal func getEventsStorageDirectory(createDirectory: Bool = true) -> URL {
-        // TODO: Update to use applicationSupportDirectory for all platforms (this will require a migration)
-        // let searchPathDirectory = FileManager.SearchPathDirectory.applicationSupportDirectory
-        // tvOS doesn't have access to document
-        // macOS /Documents dir might be synced with iCloud
-        #if os(tvOS) || os(macOS)
+        #if os(tvOS)
             let searchPathDirectory = FileManager.SearchPathDirectory.cachesDirectory
         #else
-            let searchPathDirectory = FileManager.SearchPathDirectory.documentDirectory
+            let searchPathDirectory = FileManager.SearchPathDirectory.applicationSupportDirectory
         #endif
 
         let urls = fileManager.urls(for: searchPathDirectory, in: .userDomainMask)
